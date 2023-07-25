@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       # Get the CI token from project settings on your Stoplight workspace
-      PROJECT_TOKEN: '{132992e9-da73-4080-a19e-9b043ffe582e}'
+      PROJECT_TOKEN: '{npx @stoplight/cli@6 push --ci-token 132992e9-da73-4080-a19e-9b043ffe582e}'
       # Get the Project URL from your Stoplight workspace. Don't add a trailing slash.
       PROJECT_URL: '{https://caitlin.stoplight.io/docs/cliproject}'
     steps:
@@ -42,10 +42,10 @@ jobs:
         run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '16'
       - name: Push files to Stoplight
         run: |
-          npx @stoplight/cli@5 push --ci-token ${{env.PROJECT_TOKEN}} --directory ${{ github.workspace }} --branch ${{ env.BRANCH_NAME }}
+          npx @stoplight/cli@6 push --ci-token ${{env.PROJECT_TOKEN}} --directory ${{ github.workspace }} --branch ${{ env.BRANCH_NAME }}
       - name: Stoplight PR comment
         if: github.event_name == 'pull_request'
         uses: NejcZdovc/comment-pr@v1
